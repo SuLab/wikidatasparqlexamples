@@ -1,0 +1,10 @@
+#QUERY <http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql>
+
+# Get all Wikidata items that contain a statement with a Disease Ontology ID (P699)
+
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT * WHERE {
+   ?diseases wdt:P699 ?doid .
+}
