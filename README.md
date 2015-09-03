@@ -18,6 +18,18 @@ SELECT * WHERE {
 ~~~
 [Execute](http://wdqs-beta.wmflabs.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20*%20WHERE%20%7B%0A%20%20%20%3Fdiseases%20wdt%3AP699%20%3Fdoid%20.%0A%7D)
 
+### Count the number of Genes in Wikidata grouped by species ###
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?species (count(distinct ?gene) as ?noItems)  WHERE {
+   ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
+   ?gene wdt:P703 ?species . # P703 Found in taxon
+ }
+ GROUP BY ?species
+~~~
 ### Federated queries ###
 #### Uniprot ####
 The following query is submitted through Uniprot's SPARQL endpoint 
