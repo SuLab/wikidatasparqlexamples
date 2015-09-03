@@ -6,5 +6,13 @@ Wikidata has its own SPARQL endpoint. SPARQL queries can be submitted from any a
 This repository collects example queries to the SPARQL endpoint of Wikidata. 
 
 
+## Example ##
+### Get all Wikidata  items with a Disease Ontology ID ###
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
-]
+SELECT * WHERE {
+   ?diseases wdt:P699 ?doid .
+}
+~~~
