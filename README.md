@@ -64,3 +64,26 @@ BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?wduniprot)) as ?uniprot)
 }
 GROUP BY ?uniprot ?proteinLabel ?wd_url
 ~~~
+
+## Getting Wikidata into R ##
+It is possible to get content from Wikidata [into R]( http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) for further analysis or data analysis. The following R script is an example of such a script:
+
+~~~R
+library(SPARQL)
+library(ggplot2)
+wikidataSparql <- "http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql"
+countGenes <- "#QUERY <http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql>
+
+               PREFIX wd: <http://www.wikidata.org/entity/> 
+               PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+               PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+               SELECT ?species (count(distinct ?gene) as ?noItems)  WHERE {
+                    ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
+                    ?gene wdt:P703 ?species . # P703 Found in taxon
+               }
+               GROUP BY ?species"
+results <- SPARQL(wikidataSparql, countGenes)
+matrix <- as.matrix(results$results)
+View(matrix)
+~~~
