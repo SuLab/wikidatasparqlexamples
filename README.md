@@ -48,7 +48,9 @@ PREFIX database:<http://purl.uniprot.org/database/>
 
 SELECT DISTINCT ?wd_url ?uniprot ?proteinLabel (group_concat(distinct ?pfam ;separator="; ") as ?pfam_id) 
    (group_concat(distinct ?pdb; separator="; ") as ?pdbId)
-   (group_concat(distinct ?refseq; separator="; ") as ?RefSeq_Id) WHERE {
+   (group_concat(distinct ?refseq; separator="; ") as ?RefSeq_Id)
+   (group_concat(distinct ?goid; separator="; ") as ?upGoid)
+WHERE {
 SERVICE <http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql>{
    ?wd_url wdt:P279 wd:Q8054 .
    ?wd_url rdfs:label ?proteinLabel .
@@ -63,6 +65,9 @@ BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?wduniprot)) as ?uniprot)
 ?pdb up:database database:PDB .
 ?uniprot rdfs:seeAlso ?refseq .
 ?refseq up:database database:RefSeq .
+?uniprot upc:classifiedWith ?keyword  .
+?keyword rdfs:seeAlso ?goid  .
+?goid rdfs:label ?golabel  .
 }
 GROUP BY ?uniprot ?proteinLabel ?wd_url
 ~~~
