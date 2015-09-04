@@ -65,7 +65,7 @@ BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?wduniprot)) as ?uniprot)
 ?pdb up:database database:PDB .
 ?uniprot rdfs:seeAlso ?refseq .
 ?refseq up:database database:RefSeq .
-?uniprot upc:classifiedWith ?keyword  .
+?uniprot up:classifiedWith ?keyword  .
 ?keyword rdfs:seeAlso ?goid  .
 ?goid rdfs:label ?golabel  .
 }
