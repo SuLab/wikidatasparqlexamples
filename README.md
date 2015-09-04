@@ -18,7 +18,7 @@ SELECT * WHERE {
    ?diseases wdt:P699 ?doid .
 }
 ~~~
-[Execute](http://wdqs-beta.wmflabs.org/\#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20*%20WHERE%20%7B%0A%20%20%20%3Fdiseases%20wdt%3AP699%20%3Fdoid%20.%0A%7D)
+[Execute](http://wdqs-beta.wmflabs.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20*%20WHERE%20%7B%0A%20%20%20%3Fdiseases%20wdt%3AP699%20%3Fdoid%20.%0A%7D)
 
 ### Count the number of Genes in Wikidata grouped by species ###
 ~~~sparql
@@ -32,7 +32,7 @@ SELECT ?species (count(distinct ?gene) as ?noItems)  WHERE {
  }
  GROUP BY ?species
 ~~~
-[Execute](https://wdqs-beta.wmflabs.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%20%3Fspecies%20(count(distinct%20%3Fgene)%20as%20%3FnoItems)%20%20WHERE%20%7B%0A%20%20%20%3Fgene%20wdt%3AP351%20%3FentrezID%20.%20%23%20P351%20Entrez%20Gene%20ID%0A%20%20%20%3Fgene%20wdt%3AP703%20%3Fspecies%20.%20%23%20P703%20Found%20in%20taxon%0A%20%7D%0A%20GROUP%20BY%20%3Fspecies)
+[Execute](https://wdqs-beta.wmflabs.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%20%3Fspecies%20\(count\(distinct%20%3Fgene\)%20as%20%3FnoItems\)%20%20WHERE%20%7B%0A%20%20%20%3Fgene%20wdt%3AP351%20%3FentrezID%20.%20%23%20P351%20Entrez%20Gene%20ID%0A%20%20%20%3Fgene%20wdt%3AP703%20%3Fspecies%20.%20%23%20P703%20Found%20in%20taxon%0A%20%7D%0A%20GROUP%20BY%20%3Fspecies)
 
 ### Federated queries ###
 #### Uniprot ####
