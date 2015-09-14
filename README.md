@@ -9,6 +9,23 @@ This repository collects example queries to the SPARQL endpoint of Wikidata.
 
 
 ## Examples ##
+### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+   SELECT ?compound ?chembl ?label WHERE {
+       ?p p:P592/v:P592 'CHEMBL651' .
+       ?p wdt:P769 ?compound .
+       ?compound wdt:P592 ?chembl .
+       OPTIONAL  {?compound rdfs:label ?label filter (lang(?label) = "en")}
+}
+~~~
+[Execute](http://tinyurl.com/ofpugzh)
+
+
+
 ### Get all Wikidata  items with a Disease Ontology ID ###
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
