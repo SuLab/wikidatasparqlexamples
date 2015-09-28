@@ -32,7 +32,29 @@ limit 10
 ~~~
 [Execute](http://tinyurl.com/p2d9fct)
 
+~~~R
+library(SPARQL)
+sparql <- "https://query.wikidata.org/bigdata/namespace/wdq/sparql"
+query <- "prefix schema: <http://schema.org/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
+SELECT ?cid ?entrez_id ?label ?article WHERE {
+    ?cid wdt:P351 ?entrez_id .
+    OPTIONAL {
+        ?cid rdfs:label ?label filter (lang(?label) = \"en\") .
+    }
+    OPTIONAL {
+      ?article schema:about ?cid .
+      ?article schema:inLanguage \"en\" .
+      FILTER (SUBSTR(str(?article), 1, 25) = \"https://en.wikipedia.org/\")
+    }
+} 
+"
+results <- SPARQL(sparql, query)
+View(as.matrix(results$results))
+~~~
 
 ### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
 ~~~sparql
