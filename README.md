@@ -89,8 +89,6 @@ sparql.setReturnFormat(JSON)
 results = sparql.query().convert()
 
 pprint.pprint(results)
-for result in results["results"]["bindings"]:
-    print('President: {}, Presidents\'s wife: '.format(result["l"]["value"], result["wl"]["value"]))
 ~~~
 
 ### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
