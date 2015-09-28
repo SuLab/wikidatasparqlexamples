@@ -32,6 +32,7 @@ limit 10
 ~~~
 [Execute](http://tinyurl.com/p2d9fct)
 
+Same query to run in R
 ~~~R
 library(SPARQL)
 sparql <- "https://query.wikidata.org/bigdata/namespace/wdq/sparql"
