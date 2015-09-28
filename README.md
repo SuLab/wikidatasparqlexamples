@@ -2,13 +2,38 @@
 
 # Query wikidata with SPARQL #
 
-Wikidata has its own SPARQL endpoint. SPARQL queries can be submitted from any at http://query.wikidata.org/, or its direct url (http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql). The latter URL allows integrating Wikidata items with external SPARQL endpoints through [federated queries](http://www.w3.org/TR/sparql11-federated-query/) or to integrate in data analysis packages such as [R](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) or any other platform with a SPARQL plugin such as frameworks such as from a external federated query of a framework which includes a SPARQL plugin such as [Text mate with its turtle bundle](https://github.com/peta/turtle.tmbundle). 
+Wikidata has its own SPARQL endpoint. SPARQL queries can be submitted via a web form at http://query.wikidata.org/, or, for programmatic access:  https://query.wikidata.org/bigdata/namespace/wdq/sparql?query={SPARQL}
+. The latter URL allows integrating Wikidata items with external SPARQL endpoints through [federated queries](http://www.w3.org/TR/sparql11-federated-query/) or to integrate in data analysis packages such as [R](http://www.r-bloggers.com/sparql-with-r-in-less-than-5-minutes/) or any other platform with a SPARQL plugin such as frameworks such as from a external federated query of a framework which includes a SPARQL plugin such as [Text mate with its turtle bundle](https://github.com/peta/turtle.tmbundle). 
 
 ### What is this repository for? ###
 This repository collects example queries to the SPARQL endpoint of Wikidata. 
 
 
 ## Examples ##
+### Get mapping of Wikipedia to WikiData to Entrez Gene ###
+~~~sparql
+prefix schema: <http://schema.org/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?cid ?entrez_id ?label ?article WHERE {
+    ?cid wdt:P351 ?entrez_id .
+    OPTIONAL {
+        ?cid rdfs:label ?label filter (lang(?label) = "en") .
+    }
+    OPTIONAL {
+      ?article schema:about ?cid .
+      ?article schema:inLanguage "en" .
+      FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+    }
+} 
+limit 10
+~~~
+[Execute](http://tinyurl.com/p2d9fct)
+
+
+
 ### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
