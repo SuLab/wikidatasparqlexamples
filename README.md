@@ -57,6 +57,42 @@ results <- SPARQL(sparql, query)
 View(as.matrix(results$results))
 ~~~
 
+Python
+~~~python
+__author__ = 'Sebastian Burgstaller'
+
+
+from SPARQLWrapper import SPARQLWrapper, JSON
+import pprint
+
+sparql = SPARQLWrapper("https://query.wikidata.org/bigdata/namespace/wdq/sparql")
+sparql.setQuery("""
+    prefix schema: <http://schema.org/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?cid ?entrez_id ?label ?article WHERE {
+    ?cid wdt:P351 ?entrez_id .
+    OPTIONAL {
+        ?cid rdfs:label ?label filter (lang(?label) = "en") .
+    }
+    OPTIONAL {
+      ?article schema:about ?cid .
+      ?article schema:inLanguage "en" .
+      FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
+    }
+} 
+""")
+
+sparql.setReturnFormat(JSON)
+results = sparql.query().convert()
+
+pprint.pprint(results)
+for result in results["results"]["bindings"]:
+    print('President: {}, Presidents\'s wife: '.format(result["l"]["value"], result["wl"]["value"]))
+~~~
+
 ### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
