@@ -133,6 +133,50 @@ SELECT ?species (count(distinct ?gene) as ?noItems)  WHERE {
 ~~~
 [Execute](https://wdqs-beta.wmflabs.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0A%0ASELECT%20%3Fspecies%20\(count\(distinct%20%3Fgene\)%20as%20%3FnoItems\)%20%20WHERE%20%7B%0A%20%20%20%3Fgene%20wdt%3AP351%20%3FentrezID%20.%20%23%20P351%20Entrez%20Gene%20ID%0A%20%20%20%3Fgene%20wdt%3AP703%20%3Fspecies%20.%20%23%20P703%20Found%20in%20taxon%0A%20%7D%0A%20GROUP%20BY%20%3Fspecies)
 
+### Go terms in Wikidata ###
+~~~sparql
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+PREFIX reference: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+SELECT * WHERE {
+  ?wdid wdt:P686 ?go_id .
+  ?wdid rdfs:label ?go_name .
+  FILTER (LANG(?go_name) = "en")
+ }
+~~~
+[Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0APREFIX%20reference%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Freference%2F%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0APREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fwdid%20wdt%3AP686%20%3Fgo_id%20.%0A%20%20%3Fwdid%20rdfs%3Alabel%20%3Fgo_name%20.%0A%20%20FILTER%20(LANG(%3Fgo_name)%20%3D%20%22en%22)%0A%20%7D)
+
+### Proteins added by ProteinBoxBot ###
+~~~sparql
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+PREFIX reference: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+SELECT ?protein_name ?uniprot_id ?wdid ?wdtimestamp ?stated_in WHERE {
+  ?wdid wdt:P279 wd:Q8054 .
+  ?wdid rdfs:label ?protein_name .
+  ?wdid wdt:P352 ?uniprot_id .
+  ?wdid schema:dateModified ?wdtimestamp .
+  ?wdid p:P279 ?metadata  .
+  ?metadata prov:wasDerivedFrom ?prov .
+  ?prov reference:P143 wd:Q905695 .
+  ?prov reference:P854 ?stated_in .
+  FILTER (lang(?protein_name) = "en")
+ }
+~~~
+[Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0APREFIX%20reference%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Freference%2F%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0APREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0ASELECT%20%3Fprotein_name%20%3Funiprot_id%20%3Fwdid%20%3Fwdtimestamp%20%3Fstated_in%20WHERE%20%7B%0A%20%20%3Fwdid%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%20%3Fwdid%20rdfs%3Alabel%20%3Fprotein_name%20.%0A%20%20%3Fwdid%20wdt%3AP352%20%3Funiprot_id%20.%0A%20%20%3Fwdid%20schema%3AdateModified%20%3Fwdtimestamp%20.%0A%20%20%3Fwdid%20p%3AP279%20%3Fmetadata%20%20.%0A%20%20%3Fmetadata%20prov%3AwasDerivedFrom%20%3Fprov%20.%0A%20%20%3Fprov%20reference%3AP143%20wd%3AQ905695%20.%0A%20%20%3Fprov%20reference%3AP854%20%3Fstated_in%20.%0A%20%20FILTER%20(lang(%3Fprotein_name)%20%3D%20%22en%22)%0A%20%7D)
+
 ### Federated queries ###
 #### Uniprot ####
 The following query is submitted through Uniprot's SPARQL endpoint 
