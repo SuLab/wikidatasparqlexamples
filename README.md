@@ -239,7 +239,7 @@ View(matrix)
 ~~~
 
 ## SPARQL template queries for ProteinBoxBots ##
-### Getting all proteins from Uniprot from species 272561 ###
+### Getting all proteins from Uniprot for species 272561 ###
 ~~~sparql
 PREFIX up:<http://purl.uniprot.org/core/> 
 PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
