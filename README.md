@@ -237,3 +237,75 @@ results <- SPARQL(wikidataSparql, countGenes)
 matrix <- as.matrix(results$results)
 View(matrix)
 ~~~
+
+## SPARQL template queries for ProteinBoxBots ##
+### Getting all proteins from Uniprot from species 272561 ###
+~~~sparql
+PREFIX up:<http://purl.uniprot.org/core/> 
+PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT *
+WHERE
+{
+	?protein a up:Protein .
+        ?protein up:reviewed "true"^^xsd:boolean .
+  	?protein rdfs:label ?protein_label .
+        ?protein up:organism taxonomy:272561 .
+}
+~~~
+[Execute](http://sparql.uniprot.org/sparql/?format=html&query=PREFIX+up%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E+%0D%0APREFIX+taxonomy%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0ASELECT+DISTINCT+*%0D%0AWHERE%0D%0A%7B%0D%0A%09%09%3Fprotein+a+up%3AProtein+.%0D%0A++++++++%3Fprotein+up%3Areviewed+%22true%22%5E%5Exsd%3Aboolean+.%0D%0A++%09%09%3Fprotein+rdfs%3Alabel+%3Fprotein_label+.%0D%0A++++++++%3Fprotein+up%3Aorganism+taxonomy%3A272561+.%0D%0A%7D)
+
+### Getting protein annotations for protein: O84188 ###
+~~~sparql
+PREFIX up:<http://purl.uniprot.org/core/>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+PREFIX taxonomy:<http://purl.uniprot.org/taxonomy/>
+PREFIX database:<http://purl.uniprot.org/database/>
+SELECT ?uniprot ?plabel ?ecName ?upversion 
+       (group_concat(distinct ?encodedBy; separator="; ") as ?encoded_by)
+       (group_concat(distinct ?alias; separator="; ") as ?upalias)
+       (group_concat(distinct ?pdb; separator="; ") as ?pdbid)
+       (group_concat(distinct ?refseq; separator="; ") as ?refseqid)
+       (group_concat(distinct ?ensP; separator="; ") as ?ensemblp)
+WHERE
+{
+     VALUES ?uniprot {<http://purl.uniprot.org/uniprot/O84188>}
+        ?uniprot rdfs:label ?plabel .
+        ?uniprot up:version ?upversion . 
+        ?uniprot up:encodedBy ?gene .
+		?gene skos:prefLabel ?encodedBy .
+        optional{?uniprot up:alternativeName ?upAlias .
+        ?upAlias up:ecName ?ecName .}
+        
+        OPTIONAL{ ?uniprot up:alternativeName ?upAlias .
+           {?upAlias up:fullName ?alias .} UNION
+           {?upAlias up:shortName ?alias .}}
+        ?uniprot up:version ?upversion .
+        OPTIONAL{?uniprot rdfs:seeAlso ?pdb .
+        ?pdb up:database database:PDB .}
+        OPTIONAL{?uniprot rdfs:seeAlso ?refseq .
+        ?refseq up:database database:RefSeq .}  
+        OPTIONAL{?uniprot rdfs:seeAlso ?ensT .
+        ?ensT up:database database:Ensembl .
+        ?ensT up:translatedTo ?ensP .}
+}
+group by ?upAlias ?uniprot ?encodedBy ?plabel ?ecName ?upversion
+
+### Get GO annotations for protein O84188 ###
+~~~sparql
+PREFIX up:<http://purl.uniprot.org/core/> 
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
+SELECT DISTINCT ?protein ?go ?goLabel ?parentLabel
+WHERE
+{
+  		VALUES ?protein {<http://purl.uniprot.org/uniprot/O84188>}
+		?protein a up:Protein .
+  		?protein up:classifiedWith ?go .   
+        ?go rdfs:label ?goLabel .
+        ?go rdfs:subClassOf* ?parent .
+        ?parent rdfs:label ?parentLabel .
+        optional {?parent rdfs:subClassOf ?grandParent .}
+        FILTER (!bound(?grandParent))
+}
+~~~
+[Execute](http://sparql.uniprot.org/sparql/?format=html&query=PREFIX+up%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E+%0D%0APREFIX+skos%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E+%0D%0ASELECT+DISTINCT+%3Fprotein+%3Fgo+%3FgoLabel+%3FparentLabel%0D%0AWHERE%0D%0A%7B%0D%0A++%09%09VALUES+%3Fprotein+%7B%3Chttp%3A%2F%2Fpurl.uniprot.org%2Funiprot%2FO84188%3E%7D%0D%0A%09%09%3Fprotein+a+up%3AProtein+.%0D%0A++%09%09%3Fprotein+up%3AclassifiedWith+%3Fgo+.+++%0D%0A++++++++%3Fgo+rdfs%3Alabel+%3FgoLabel+.%0D%0A++++++++%3Fgo+rdfs%3AsubClassOf*+%3Fparent+.%0D%0A++++++++%3Fparent+rdfs%3Alabel+%3FparentLabel+.%0D%0A++++++++optional+%7B%3Fparent+rdfs%3AsubClassOf+%3FgrandParent+.%7D%0D%0A++++++++FILTER+%28%21bound%28%3FgrandParent%29%29%0D%0A%7D)
