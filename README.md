@@ -256,6 +256,7 @@ WHERE
 [Execute](http://sparql.uniprot.org/sparql/?format=html&query=PREFIX+up%3A%3Chttp%3A%2F%2Fpurl.uniprot.org%2Fcore%2F%3E+%0D%0APREFIX+taxonomy%3A+%3Chttp%3A%2F%2Fpurl.uniprot.org%2Ftaxonomy%2F%3E%0D%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0D%0ASELECT+DISTINCT+*%0D%0AWHERE%0D%0A%7B%0D%0A%09%09%3Fprotein+a+up%3AProtein+.%0D%0A++++++++%3Fprotein+up%3Areviewed+%22true%22%5E%5Exsd%3Aboolean+.%0D%0A++%09%09%3Fprotein+rdfs%3Alabel+%3Fprotein_label+.%0D%0A++++++++%3Fprotein+up%3Aorganism+taxonomy%3A272561+.%0D%0A%7D)
 
 ### Getting protein annotations for protein: O84188 ###
+
 ~~~sparql
 PREFIX up:<http://purl.uniprot.org/core/>
 PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
@@ -292,6 +293,7 @@ WHERE
 group by ?upAlias ?uniprot ?encodedBy ?plabel ?ecName ?upversion
 
 ### Get GO annotations for protein O84188 ###
+
 ~~~sparql
 PREFIX up:<http://purl.uniprot.org/core/> 
 PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
