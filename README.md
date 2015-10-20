@@ -291,7 +291,7 @@ WHERE
         ?ensT up:translatedTo ?ensP .}
 }
 group by ?upAlias ?uniprot ?encodedBy ?plabel ?ecName ?upversion
-
+~~~
 ### Get GO annotations for protein O84188 ###
 
 ~~~sparql
