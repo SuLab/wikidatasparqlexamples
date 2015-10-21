@@ -316,6 +316,7 @@ WHERE
 ## Query for all Wikidata items that are both annotated as being of subclass of gene and protein
 ~~~sparql
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
 SELECT * WHERE {
   ?gene wdt:P279 wd:Q7187 .
   ?gene wdt:P279 wd:Q8054 .
