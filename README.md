@@ -321,3 +321,4 @@ SELECT * WHERE {
   ?gene wdt:P279 wd:Q8054 .
 }
 ~~~
+[Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
