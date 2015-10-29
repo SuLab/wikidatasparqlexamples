@@ -323,3 +323,20 @@ SELECT * WHERE {
 }
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
+
+# microbial queries
+## Request all wikidata items that are instance of or subclass of genes and have taxon any child of Bacteria
+~~~sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    PREFIX p: <http://www.wikidata.org/prop/>
+    SELECT DISTINCT ?gene ?taxa WHERE {
+    {?gene wdt:P31 wd:Q7187 }
+    UNION  
+    {?gene wdt:P279 wd:Q7187 } .
+    ?gene wdt:P703 ?taxa .
+    ?taxa wdt:P171* wd:Q10876  
+}
+[Execute] 
+(https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20PREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0A%20%20%20%20SELECT%20DISTINCT%20%3Fgene%20%3Ftaxa%20WHERE%20%7B%0A%20%20%20%20%7B%3Fgene%20wdt%3AP31%20wd%3AQ7187%20%7D%0A%20%20%20%20UNION%20%20%0A%20%20%20%20%7B%3Fgene%20wdt%3AP279%20wd%3AQ7187%20%7D%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20%3Ftaxa%20.%0A%20%20%20%20%3Ftaxa%20wdt%3AP171*%20wd%3AQ10876%20%20%0A%7D)
+
