@@ -377,3 +377,25 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 limit 10000
 ~~~
 [Execute](http://tinyurl.com/q44klxe)
+
+## Request all bacterial genes, their linked proteins, and their linked GO terms
+~~~sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    SELECT DISTINCT ?taxa ?taxa_name ?gene ?protein ?go_term ?go_name WHERE {
+    ?gene wdt:P31 wd:Q7187 . 
+    ?gene wdt:P351 ?entrez_id .  
+    ?gene wdt:P688 ?protein . 
+    ?protein wdt:P352 ?uniprot_id .   
+    ?protein ?function_type ?go_term .
+    ?go_term wdt:P686 ?go_id .
+    ?go_term rdfs:label ?go_name . 
+    FILTER (LANG(?go_name) = "en") .
+    ?gene wdt:P703 ?taxa .
+    ?taxa wdt:P171* wd:Q10876 .
+    ?taxa rdfs:label ?taxa_name . 
+    FILTER (LANG(?taxa_name) = "en") .
+}
+limit 10000
+~~~
+[Execute](http://tinyurl.com/nkyqy4e)
