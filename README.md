@@ -351,19 +351,24 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20PREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0A%20%20%20%20SELECT%20DISTINCT%20%3Fgene%20%3Ftaxa%20WHERE%20%7B%0A%20%20%20%20%7B%3Fgene%20wdt%3AP31%20wd%3AQ7187%20%7D%0A%20%20%20%20UNION%20%20%0A%20%20%20%20%7B%3Fgene%20wdt%3AP279%20wd%3AQ7187%20%7D%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20%3Ftaxa%20.%0A%20%20%20%20%3Ftaxa%20wdt%3AP171*%20wd%3AQ10876%20%20%0A%7D)
 
-## Request all bacterial genes, their linked proteins, and their linked GO terms
+## Request all operons, their regulators, and their products
 ~~~sparql
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
     PREFIX wd: <http://www.wikidata.org/entity/>
-    SELECT DISTINCT ?taxa ?taxa_name ?gene ?protein ?go_term ?go_name WHERE {
-    ?gene wdt:P31 wd:Q7187 . 
-    ?gene wdt:P351 ?entrez_id .  
-    ?gene wdt:P688 ?protein . 
-    ?protein wdt:P352 ?uniprot_id .   
+    SELECT DISTINCT ?taxa ?taxa_name ?regulator ?regulator_name ?operon ?gene ?protein ?go_term ?go_name ?product ?product_name WHERE {   
+    ?operon wdt:P279 wd:Q139677 . 
+    ?regulator wdt:P128 ?operon . 	
+    ?regulator rdfs:label ?regulator_name . 
+    FILTER (LANG(?regulator_name) = "en") .
+    ?operon wdt:P527 ?gene .  
+    ?operon wdt:P1056 ?protein .  
     ?protein ?function_type ?go_term .
     ?go_term wdt:P686 ?go_id .
     ?go_term rdfs:label ?go_name . 
     FILTER (LANG(?go_name) = "en") .
+    ?protein wdt:P1056 ?product . 
+    ?product rdfs:label ?product_name . 
+    FILTER (LANG(?product_name) = "en") .  
     ?gene wdt:P703 ?taxa .
     ?taxa wdt:P171* wd:Q10876 .
     ?taxa rdfs:label ?taxa_name . 
@@ -371,4 +376,4 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 }
 limit 10000
 ~~~
-[Execute](http://tinyurl.com/nkyqy4e)
+[Execute](http://tinyurl.com/q44klxe)
