@@ -350,3 +350,23 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 }
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20PREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0A%20%20%20%20SELECT%20DISTINCT%20%3Fgene%20%3Ftaxa%20WHERE%20%7B%0A%20%20%20%20%7B%3Fgene%20wdt%3AP31%20wd%3AQ7187%20%7D%0A%20%20%20%20UNION%20%20%0A%20%20%20%20%7B%3Fgene%20wdt%3AP279%20wd%3AQ7187%20%7D%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20%3Ftaxa%20.%0A%20%20%20%20%3Ftaxa%20wdt%3AP171*%20wd%3AQ10876%20%20%0A%7D)
+
+## Request all bacterial genes, their linked proteins, and their linked GO terms
+~~~sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    SELECT DISTINCT ?taxa ?gene ?entrez_id ?protein ?function_type ?go_term ?go_id ?go_name WHERE {
+    ?gene wdt:P31 wd:Q7187 . 
+    ?gene wdt:P351 ?entrez_id .  
+    ?gene wdt:P688 ?protein .
+    ?protein ?function_type ?go_term .
+    ?go_term wdt:P686 ?go_id .
+    ?go_term rdfs:label ?go_name . 
+    FILTER (LANG(?go_name) = "en") .
+    ?go_term wdt:P279 wd:Q8054 .  
+    ?gene wdt:P703 ?taxa .
+    ?taxa wdt:P171* wd:Q10876 .
+}
+limit 10000
+~~~
+[Execute](https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20SELECT%20DISTINCT%20%3Ftaxa%20%3Ftaxa_name%20%3Fgene%20%3Fprotein%20%3Fgo_term%20%3Fgo_name%20WHERE%20%7B%0A%20%20%20%20%3Fgene%20wdt%3AP31%20wd%3AQ7187%20.%20%0A%20%20%20%20%3Fgene%20wdt%3AP351%20%3Fentrez_id%20.%20%20%0A%20%20%20%20%3Fgene%20wdt%3AP688%20%3Fprotein%20.%20%0A%20%20%20%20%3Fprotein%20wdt%3AP352%20%3Funiprot_id%20.%20%20%20%0A%20%20%20%20%3Fprotein%20%3Ffunction_type%20%3Fgo_term%20.%0A%20%20%20%20%3Fgo_term%20wdt%3AP686%20%3Fgo_id%20.%0A%20%20%20%20%3Fgo_term%20rdfs%3Alabel%20%3Fgo_name%20.%20%0A%20%20%20%20FILTER%20(LANG(%3Fgo_name)%20%3D%20%22en%22)%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20%3Ftaxa%20.%0A%20%20%20%20%3Ftaxa%20wdt%3AP171*%20wd%3AQ10876%20.%0A%20%20%20%20%3Ftaxa%20rdfs%3Alabel%20%3Ftaxa_name%20.%20%0A%20%20%20%20FILTER%20(LANG(%3Ftaxa_name)%20%3D%20%22en%22)%20.%0A%7D%0Alimit%2010000)
