@@ -354,48 +354,63 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 ## Request all operons, their regulators, and their products
 ~~~sparql
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-    PREFIX wd: <http://www.wikidata.org/entity/>
-    SELECT DISTINCT ?taxa ?taxa_name ?regulator ?regulator_name ?operon ?gene ?protein ?go_term ?go_name ?product ?product_name WHERE {   
-    ?operon wdt:P279 wd:Q139677 . 
-    ?regulator wdt:P128 ?operon . 	
-    ?regulator rdfs:label ?regulator_name . 
-    FILTER (LANG(?regulator_name) = "en") .
-    ?operon wdt:P527 ?gene .  
-    ?operon wdt:P1056 ?protein .  
-    ?protein ?function_type ?go_term .
-    ?go_term wdt:P686 ?go_id .
-    ?go_term rdfs:label ?go_name . 
-    FILTER (LANG(?go_name) = "en") .
-    ?protein wdt:P1056 ?product . 
-    ?product rdfs:label ?product_name . 
-    FILTER (LANG(?product_name) = "en") .  
-    ?gene wdt:P703 ?taxa .
-    ?taxa wdt:P171* wd:Q10876 .
-    ?taxa rdfs:label ?taxa_name . 
-    FILTER (LANG(?taxa_name) = "en") .
+PREFIX wd: <http://www.wikidata.org/entity/>
+SELECT ?taxa_name ?regulator_name ?operon_name ?go_name ?product_name 
+WHERE {   
+?operon wdt:P279 wd:Q139677 ;
+rdfs:label ?operon_name ;
+   	wdt:P527 ?gene ;
+   	wdt:P1056 ?protein .  
+?regulator wdt:P128 ?operon  ;
+   	rdfs:label ?regulator_name .
+?protein ?function_type ?go_term ;
+ 	wdt:P1056 ?product .
+?go_term wdt:P686 ?go_id ;
+   	rdfs:label ?go_name .   
+?product rdfs:label ?product_name . 
+?gene wdt:P703 ?taxa .
+?taxa rdfs:label ?taxa_name . 
+FILTER (LANG(?taxa_name) = "en") .
+   	FILTER (LANG(?regulator_name) = "en") .
+   	FILTER (LANG(?go_name) = "en") 
+  	FILTER (LANG(?product_name) = "en") .  
 }
-limit 10000
 ~~~
-[Execute](http://tinyurl.com/q44klxe)
+[Execute](http://tinyurl.com/pt9apmy)
 
 ## Request all bacterial genes, their linked proteins, and their linked GO terms
 ~~~sparql
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-    PREFIX wd: <http://www.wikidata.org/entity/>
-    SELECT DISTINCT ?taxa ?taxa_name ?gene ?protein ?go_term ?go_name WHERE {
-    ?gene wdt:P31 wd:Q7187 . 
-    ?gene wdt:P351 ?entrez_id .  
-    ?gene wdt:P688 ?protein . 
-    ?protein wdt:P352 ?uniprot_id .   
-    ?protein ?function_type ?go_term .
-    ?go_term wdt:P686 ?go_id .
-    ?go_term rdfs:label ?go_name . 
-    FILTER (LANG(?go_name) = "en") .
-    ?gene wdt:P703 ?taxa .
-    ?taxa wdt:P171* wd:Q10876 .
-    ?taxa rdfs:label ?taxa_name . 
-    FILTER (LANG(?taxa_name) = "en") .
+PREFIX wd: <http://www.wikidata.org/entity/>
+SELECT DISTINCT ?taxa_name ?gene_id ?uniprot_id ?prot_name ?go_name 
+WHERE {
+?gene wdt:P351 ?gene_id ; 
+wdt:P688 ?protein ;
+  wdt:P703 ?taxa .
+  ?protein rdfs:label ?prot_name ;  
+	wdt:P352 ?uniprot_id ; 
+	?function_type ?go_term .
+  ?go_term rdfs:label ?go_name . 
+  ?taxa wdt:P171* wd:Q10876 ;
+	rdfs:label ?taxa_name .
+FILTER (LANG(?go_name) = "en") .
+FILTER (LANG(?taxa_name) = "en") .
+FILTER (LANG(?prot_name) = "en") .
 }
-limit 10000
 ~~~
-[Execute](http://tinyurl.com/nkyqy4e)
+[Execute](http://tinyurl.com/pulsew3)
+
+## Request all organisms that are located (P276) in the female urogential tract (wd:Q5880) and that have a gene with product (P1056) indole (wd:Q319541). 
+~~~sparql
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+SELECT ?organism_name WHERE {   
+  ?organism_item wdt:P276 wd:Q5880 ;
+    rdfs:label ?organism_name . 
+  ?gene wdt:P703 ?organism_item ; 
+    wdt:P1056 wd:Q319541 . 
+  FILTER (LANG(?organism_name) = "en") .    
+}  
+~~~
+[Execute](http://tinyurl.com/no7sxv8)
