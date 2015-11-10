@@ -303,6 +303,51 @@ WHERE
 }
 group by ?upAlias ?uniprot ?encodedBy ?plabel ?ecName ?upversion
 ~~~
+
+### Retrieve all membrane proteins annotated for a role in colorectal cancer ###
+
+~~~sparql
+PREFIX up: <http://purl.uniprot.org/core/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+PREFIX atlas: <http://rdf.ebi.ac.uk/resource/atlas/>
+PREFIX atlasterms: <http://rdf.ebi.ac.uk/terms/atlas/>
+
+SELECT DISTINCT ?geneLabel ?wdncbi ?geneLocStart ?geneLocStop ?disease_text ?goLabel
+
+WHERE
+{    
+    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql>
+    {
+        ?gene wdt:P279 wd:Q7187 ;
+         rdfs:label ?geneLabel ;
+         wdt:P644 ?geneLocStart ;
+         wdt:P645 ?geneLocStop ;
+         wdt:P351 ?wdncbi ;
+         wdt:P688 ?wd_protein .
+        ?wd_protein wdt:P352 ?uniprot_id ;
+            ?function_type ?go_term .
+        ?go_term wdt:P686 "0016020" ;
+            rdfs:label ?goLabel .   
+    }
+    BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?uniprot_id)) as ?protein)
+		      ?protein up:annotation ?annotation .
+		      ?annotation a up:Disease_Annotation .
+        ?annotation up:disease ?disease_annotation .
+        ?disease_annotation <http://www.w3.org/2004/02/skos/core#prefLabel> ?disease_text .
+    FILTER(REGEX(?disease_text, "Colorectal cancer", "i"))
+    FILTER(LANG(?geneLabel) = "en")
+    FILTER(LANG(?goLabel) = "en")  
+}
+~~~
+
 ### Get GO annotations for protein O84188 ###
 
 ~~~sparql
