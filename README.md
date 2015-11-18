@@ -380,6 +380,25 @@ SELECT * WHERE {
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
 
+## Get all human genes added by PBB
+~~~sparql
+    PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX wd: <http://www.wikidata.org/entity/>
+    PREFIX p: <http://www.wikidata.org/prop/>
+    PREFIX v: <http://www.wikidata.org/prop/statement/>
+    PREFIX prov: <http://www.w3.org/ns/prov#>
+    PREFIX reference: <http://www.wikidata.org/prop/reference/>
+    SELECT ?ncbigeneId WHERE {
+    ?gene wdt:P279 wd:Q7187 .
+    ?gene p:P351 ?ncbigeneId .
+    ?gene wdt:P703 wd:Q5 .
+    ?gene ?p ?o .
+    ?o prov:wasDerivedFrom ?derivedFrom .
+    ?derivedFrom reference:P143 wd:Q20641742 .
+}
+~~~
+[Execute](https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20PREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0A%20%20%20%20PREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0A%20%20%20%20PREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0A%20%20%20%20PREFIX%20reference%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Freference%2F%3E%0A%20%20%20%20SELECT%20%3FncbigeneId%20WHERE%20%7B%0A%20%20%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%20%20%3Fgene%20p%3AP351%20%3FncbigeneId%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20wd%3AQ5%20.%0A%20%20%20%20%3Fgene%20%3Fp%20%3Fo%20.%0A%20%20%20%20%3Fo%20prov%3AwasDerivedFrom%20%3FderivedFrom%20.%0A%20%20%20%20%3FderivedFrom%20reference%3AP143%20wd%3AQ20641742%20.%0A%7D)
+
 # microbial queries
 ## Request all wikidata items that are instance of or subclass of genes and have taxon any child of Bacteria
 ~~~sparql
