@@ -10,9 +10,13 @@ This repository collects example queries to the SPARQL endpoint of Wikidata.
 
 ## Prefixes ##
 PREFIX wd: <http://www.wikidata.org/entity/>
+
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
 PREFIX wikibase: <http://wikiba.se/ontology#>
+
 PREFIX p: <http://www.wikidata.org/prop/>
+
 PREFIX q: <http://www.wikidata.org/prop/qualifier/>
 
 others: see http://prefix.cc
