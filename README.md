@@ -219,7 +219,7 @@ SELECT DISTINCT ?wd_url ?uniprot ?proteinLabel (group_concat(distinct ?pfam ;sep
    (group_concat(distinct ?refseq; separator="; ") as ?RefSeq_Id)
    (group_concat(distinct ?goid; separator="; ") as ?upGoid)
 WHERE {
-SERVICE <http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql>{
+SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql>{
    ?wd_url wdt:P279 wd:Q8054 .
    ?wd_url rdfs:label ?proteinLabel .
    ?wd_url wdt:P352 ?wduniprot .
@@ -246,7 +246,7 @@ It is possible to get content from Wikidata [into R]( http://www.r-bloggers.com/
 ~~~R
 library(SPARQL)
 library(ggplot2)
-wikidataSparql <- "http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql"
+wikidataSparql <- "https://query.wikidata.org/bigdata/namespace/wdq/sparql"
 countGenes <- "#QUERY <http://wdqs-beta.wmflabs.org/bigdata/namespace/wdq/sparql>
 
                PREFIX wd: <http://www.wikidata.org/entity/> 
