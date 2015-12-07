@@ -19,6 +19,8 @@ PREFIX p: <http://www.wikidata.org/prop/>
 
 PREFIX q: <http://www.wikidata.org/prop/qualifier/>
 
+PREFIX reference: <http://www.wikidata.org/prop/reference/>
+
 others: see http://prefix.cc
 
 ## Examples ##
