@@ -200,7 +200,7 @@ SELECT ?protein_name ?uniprot_id ?wdid ?wdtimestamp ?stated_in WHERE {
   FILTER (lang(?protein_name) = "en")
  }
 ~~~
-[Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0APREFIX%20reference%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Freference%2F%3E%0APREFIX%20prov%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0APREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0ASELECT%20%3Fprotein_name%20%3Funiprot_id%20%3Fwdid%20%3Fwdtimestamp%20%3Fstated_in%20WHERE%20%7B%0A%20%20%3Fwdid%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%20%3Fwdid%20rdfs%3Alabel%20%3Fprotein_name%20.%0A%20%20%3Fwdid%20wdt%3AP352%20%3Funiprot_id%20.%0A%20%20%3Fwdid%20schema%3AdateModified%20%3Fwdtimestamp%20.%0A%20%20%3Fwdid%20p%3AP279%20%3Fmetadata%20%20.%0A%20%20%3Fmetadata%20prov%3AwasDerivedFrom%20%3Fprov%20.%0A%20%20%3Fprov%20reference%3AP143%20wd%3AQ905695%20.%0A%20%20%3Fprov%20reference%3AP854%20%3Fstated_in%20.%0A%20%20FILTER%20(lang(%3Fprotein_name)%20%3D%20%22en%22)%0A%20%7D)
+[Execute](http://tinyurl.com/pn36ulp)
 
 ### Federated queries ###
 #### Uniprot ####
