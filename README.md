@@ -26,25 +26,23 @@ others: see http://prefix.cc
 ## Examples ##
 ### Get mapping of Wikipedia to WikiData to Entrez Gene ###
 ~~~sparql
-prefix schema: <http://schema.org/>
-PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX schema: <http://schema.org/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-
-SELECT ?cid ?entrez_id ?label ?article WHERE {
+SELECT ?entrez_id ?cid ?article ?label WHERE {
     ?cid wdt:P351 ?entrez_id .
+  	?cid wdt:P703 wd:Q5 . 
     OPTIONAL {
         ?cid rdfs:label ?label filter (lang(?label) = "en") .
     }
-    OPTIONAL {
-      ?article schema:about ?cid .
-      ?article schema:inLanguage "en" .
-      FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/")
-    }
+    ?article schema:about ?cid .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/") . 
+    FILTER (SUBSTR(str(?article), 1, 38) != "https://en.wikipedia.org/wiki/Template")
 } 
 limit 10
 ~~~
-[Execute](http://tinyurl.com/p2d9fct)
+[Execute](http://tinyurl.com/oktlvsc)
 
 Same query to run in R
 ~~~R
