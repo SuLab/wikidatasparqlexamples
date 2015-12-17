@@ -1,0 +1,17 @@
+# Query checks if there are Wikidata protein items which have interwiki links, as these links are most likely wrong.
+
+prefix schema: <http://schema.org/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?cid ?entrez_id ?label ?article WHERE {
+    ?cid wdt:P279 wd:Q8054 .
+  	?cid wdt:P703 wd:Q5 . 
+    OPTIONAL {
+        ?cid rdfs:label ?label filter (lang(?label) = "en") .
+    }
+    ?article schema:about ?cid .
+    ?article schema:inLanguage "en" .
+    FILTER (SUBSTR(str(?article), 1, 25) = "https://en.wikipedia.org/") 
+} 
