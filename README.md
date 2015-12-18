@@ -24,6 +24,23 @@ PREFIX reference: <http://www.wikidata.org/prop/reference/>
 others: see http://prefix.cc
 
 ## Examples ##
+
+### Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)
+PREFIX schema: <http://schema.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+SELECT ?entrez_id ?cid ?article ?label WHERE {
+    ?cid wdt:P351 ?entrez_id .
+  	?cid wdt:P703 wd:Q5 . 
+    OPTIONAL {
+        ?cid rdfs:label ?label filter (lang(?label) = "en") .
+    	?article schema:about ?cid .
+    	?article schema:inLanguage "en" .
+      }
+} 
+  ORDER BY ASC(?article)
+limit 10
+
 ### Get mapping of Wikipedia to WikiData to Entrez Gene ###
 ~~~sparql
 PREFIX schema: <http://schema.org/>
