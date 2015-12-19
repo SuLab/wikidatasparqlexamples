@@ -140,7 +140,7 @@ results = sparql.query().convert()
 pprint.pprint(results)
 ~~~
 
-### Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ###
+## Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ##
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -157,7 +157,7 @@ PREFIX v: <http://www.wikidata.org/prop/statement/>
 
 
 
-### Get all Wikidata  items with a Disease Ontology ID ###
+## Get all Wikidata  items with a Disease Ontology ID ##
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -168,7 +168,7 @@ SELECT * WHERE {
 ~~~
 [Execute](http://query.wikidata.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20*%20WHERE%20%7B%0A%20%20%20%3Fdiseases%20wdt%3AP699%20%3Fdoid%20.%0A%7D)
 
-### Get a Wikidata items with a particular Disease Ontology ID ###
+## Get a Wikidata items with a particular Disease Ontology ID ##
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -179,7 +179,7 @@ SELECT * WHERE {
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%0ASELECT%20*%20WHERE%20%7B%0A%20%20%20%3Fdiseases%20wdt%3AP699%20%22DOID%3A8577%22%20.%0A%7D)
 
-### Count the number of Genes in Wikidata grouped by species ###
+## Count the number of Genes in Wikidata grouped by species ##
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -193,7 +193,7 @@ SELECT ?species (count(distinct ?gene) as ?noItems)  WHERE {
 ~~~
 [Execute](http://tinyurl.com/q296vut)
 
-### Go terms in Wikidata ###
+## Go terms in Wikidata ##
 ~~~sparql
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX wd: <http://www.wikidata.org/entity/> 
