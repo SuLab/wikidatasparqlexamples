@@ -561,8 +561,8 @@ SELECT ?organism_name WHERE {
 ~~~
 [Execute](http://tinyurl.com/no7sxv8)
 
-# Queries for problems
-### Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)
+# Queries for problems #
+## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)##
 ~~~sparql
 PREFIX schema: <http://schema.org/>
 PREFIX wd: <http://www.wikidata.org/entity/>
