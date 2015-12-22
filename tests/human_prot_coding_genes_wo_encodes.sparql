@@ -10,7 +10,7 @@ PREFIX schema: <http://schema.org/>
 
 Select * WHERE {
   ?gene wdt:P279 wd:Q20747295 .
-  ?gene wdt:P703 wd:Q83310 .
+  ?gene wdt:P703 wd:Q5 .
   FILTER NOT EXISTS {?gene wdt:P688 ?m}
   
   }
