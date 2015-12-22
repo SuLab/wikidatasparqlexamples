@@ -1,0 +1,17 @@
+# This query detects mouse (Q83310) protein coding gene items (P279:Q20747295) which are lacking the encodes (P688) property. Essential for the protection of our data model from erroneous edits.
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+PREFIX q: <http://www.wikidata.org/prop/qualifier/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+
+Select * WHERE {
+  ?gene wdt:P279 wd:Q20747295 .
+  ?gene wdt:P703 wd:Q83310 .
+  FILTER NOT EXISTS {?gene wdt:P688 ?m}
+  
+  }
