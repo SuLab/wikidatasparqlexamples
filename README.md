@@ -212,6 +212,22 @@ SELECT * WHERE {
 ~~~
 [Execute](http://tinyurl.com/qyvtsc6)
 
+###Counts of subcellular localization annotations associated with human genes###
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?gene (count (distinct ?go_term) as ?noGo)  WHERE {
+   ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
+   ?gene wdt:P703 wd:Q5 . # P703 Found in taxon human 
+	?gene wdt:P688 ?protein . # encodes a thing
+  ?protein wdt:P279 wd:Q8054 . # that thing is a protein
+  ?protein wdt:P681 ?go_term    # that protein has some annotation regarding subcellular localization
+}
+ GROUP BY ?gene
+~~~
+
 ### Proteins added by ProteinBoxBot ###
 ~~~sparql
 PREFIX wikibase: <http://wikiba.se/ontology#>
