@@ -497,6 +497,27 @@ GROUP BY ?rank
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0A%0ASELECT%20DISTINCT%20%3Frank%20(count(%3Frank)%20as%20%3Fcounts)%20%20WHERE%20%7B%0A%20%20%20VALUES%20%3Frank%20%7B%20wikibase%3ADeprecatedRank%20wikibase%3ANormalRank%20%7D%0A%20%20%20%3Fdiseases%20p%3AP699%20%3Fdoid%20.%0A%20%20%20%3Fdoid%20wikibase%3Arank%20%3Frank%20.%0A%7D%0AGROUP%20BY%20%3Frank)
 
+## Get all disease ontology IDs in wikidata of both rank Normal and deprecated rank
+
+
+```
+#!SPARQL
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX statement: <http://www.wikidata.org/prop/statement/>
+
+SELECT DISTINCT ?do WHERE {
+   VALUES ?rank { wikibase:DeprecatedRank wikibase:NormalRank }
+   ?diseases p:P699 ?doid .
+   ?doid statement:P699 ?do .
+   ?doid wikibase:rank ?rank .
+}
+```
+[Execute](https://query.wikidata.org/#PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20statement%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0A%0ASELECT%20DISTINCT%20%3Fdo%20WHERE%20%7B%0A%20%20%20VALUES%20%3Frank%20%7B%20wikibase%3ADeprecatedRank%20wikibase%3ANormalRank%20%7D%0A%20%20%20%3Fdiseases%20p%3AP699%20%3Fdoid%20.%0A%20%20%20%3Fdoid%20statement%3AP699%20%3Fdo%20.%0A%20%20%20%3Fdoid%20wikibase%3Arank%20%3Frank%20.%0A%7D)
+
 # microbial queries
 ## Request all wikidata items that are instance of or subclass of genes and have taxon any child of Bacteria
 ~~~sparql
