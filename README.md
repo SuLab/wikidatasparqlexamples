@@ -629,6 +629,13 @@ ORDER BY DESC(?C)
 limit 100
 ~~~
 
+# Jenkins queries
+Identify the time Wikidata's sparql endpoint was updated last
+~~~sparql
+PREFIX schema: <http://schema.org/>
+SELECT * WHERE { <http://www.wikidata.org> schema:dateModified ?y }
+~~~
+
 # Random Queries of interest for demos # 
 Find the richest countries per capita in the world
 ~~~sparql
