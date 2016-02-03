@@ -628,3 +628,30 @@ GROUP BY ?entrez_id
 ORDER BY DESC(?C) 
 limit 100
 ~~~
+
+# Random Queries of interest for demos # 
+Find the richest countries per capita in the world
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX v: <http://www.wikidata.org/prop/statement/>
+PREFIX q: <http://www.wikidata.org/prop/qualifier/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT distinct ?countryLabel ?population ?gdp (xsd:float(xsd:float(?gdp)/xsd:float(?population)) AS ?perCapita)
+WHERE 
+{
+  ?country wdt:P31/wdt:P279* wd:Q6256 .  # find instances or subclasses of country
+  ?country wdt:P1082 ?population . 
+  ?country wdt:P2131 ?gdp .
+  FILTER ( ?population > 1000 ) 
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+}
+order by DESC(?perCapita)
+limit 100
+~~~
