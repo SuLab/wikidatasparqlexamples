@@ -678,3 +678,27 @@ WHERE
 order by DESC(?perCapita)
 limit 100
 ~~~
+
+# Data unit tests
+
+Report all Gene ontology gene annotations which do not have Gene Ontology ID
+
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+SELECT ?pot_go WHERE {
+  {
+  SELECT distinct ?pot_go WHERE {
+      {?protein wdt:P680 ?pot_go} 
+      UNION {?protein wdt:P681 ?pot_go} 
+      UNION {?protein wdt:P682 ?pot_go} .
+
+    }
+    Group BY ?pot_go
+  }
+
+  FILTER NOT EXISTS {?pot_go wdt:P686 ?no_go} .
+ }
+ ORDER BY ?pot_go
+~~~
