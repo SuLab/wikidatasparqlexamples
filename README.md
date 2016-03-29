@@ -228,6 +228,24 @@ SELECT ?gene (count (distinct ?go_term) as ?noGo)  WHERE {
  GROUP BY ?gene
 ~~~
 
+
+### All Gene Ontology evidence codes present als qualifiers on items
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+
+SELECT * WHERE {
+  {
+      SELECT ?code WHERE {
+          ?code wdt:P31 wd:Q23173209 .
+      }
+      GROUP BY ?code 
+  }
+  ?p pq:P459 ?code .
+}
+~~~
+
 ### Proteins added by ProteinBoxBot ###
 ~~~sparql
 PREFIX wikibase: <http://wikiba.se/ontology#>
