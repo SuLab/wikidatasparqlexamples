@@ -155,7 +155,21 @@ PREFIX v: <http://www.wikidata.org/prop/statement/>
 ~~~
 [Execute](http://tinyurl.com/ofpugzh)
 
+## Get all wikidata statements that cite an academic article as a reference ##
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
 
+SELECT ?statement ?PMID ?PMCID WHERE {
+  ?statement prov:wasDerivedFrom/pr:P248 ?paper .
+  ?paper wdt:P31 wd:Q13442814 .
+  OPTIONAL { ?paper wdt:P698 ?PMID . }
+  OPTIONAL { ?paper wdt:P932 ?PMCID . }
+  FILTER (!BOUND(?PMID))
+}
+~~~
 
 ## Get all Wikidata  items with a Disease Ontology ID ##
 ~~~sparql
