@@ -17,4 +17,3 @@ order by desc(?languages)
 ~~~
 [Execute](http://tinyurl.com/he7dpsl)
 
-<iframe src="http://embed.vida.io/documents/sy7vzWW7BJEvKdZeL" width="600" height="525" seamless frameBorder="0" scrolling="no">
