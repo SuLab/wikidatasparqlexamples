@@ -140,6 +140,43 @@ results = sparql.query().convert()
 pprint.pprint(results)
 ~~~
 
+## Get all the gene ontology evidence codes used in wikidata ##
+~~~sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+select distinct ?evidence_code ?evidence_codeLabel where {
+	?evidence_code wdt:P31 wd:Q23173209
+    SERVICE wikibase:label {
+    	bd:serviceParam wikibase:language "en" .
+  	}
+}
+~~~
+
+## Get 10 Gene Ontology subcellular localization information, with evidence codes for Reelin ##
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+
+SELECT distinct ?go_bp ?go_bpLabel ?determination ?determinationLabel WHERE {
+  #?protein wdt:P352 "P78509" . # get a protein by uniprot id 
+  # note the difference between wdt:P681 and p:681 in the following two statements
+  #wdt gets you to the value of the property (generally what you would expect)
+  #p gets you to the wikidata statement (which is where qualifiers and references live)
+  wd:Q13561329 wdt:P681 ?go_bp . # get a protein record directly and get biological process annotations
+  wd:Q13561329 p:P681 ?go_bp_statement . #get the statements associated with the bp annotations
+  ?go_bp_statement pq:P459 ?determination . # get 'determination method' qualifiers associated with the statements
+  # change to wd:Q23175558 for ISS (Inferred from Sequence or structural Similarity)
+  # or e.g. wd:Q23190881 for IEA (Inferred from Electronic Annotation)
+  #add labels to everything (and retrieve by appending Label to the item you want in the response)
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+  }
+}
+limit 10
+~~~
+
 ## Get all the drug-drug interactions for Methadone based on its CHEMBL id CHEMBL651 ##
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
