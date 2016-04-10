@@ -154,6 +154,7 @@ select distinct ?evidence_code ?evidence_codeLabel where {
 ~~~
 
 ## Get 10 Gene Ontology subcellular localization information, with evidence codes for Reelin ##
+~~~sparql
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
