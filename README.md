@@ -153,14 +153,15 @@ select distinct ?evidence_code ?evidence_codeLabel where {
 }
 ~~~
 
-## Get 10 Gene Ontology subcellular localization information, with evidence codes for Reelin ##
+## Get 10 Gene Ontology subcellular localization information, with evidence codes, and references for Reelin ##
 ~~~sparql
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 
-SELECT distinct ?go_bp ?go_bpLabel ?determination ?determinationLabel WHERE {
+SELECT distinct ?go_bp ?go_bpLabel ?determination ?determinationLabel ?reference_stated_inLabel ?reference_retrieved WHERE {
   #?protein wdt:P352 "P78509" . # get a protein by uniprot id 
   # note the difference between wdt:P681 and p:681 in the following two statements
   #wdt gets you to the value of the property (generally what you would expect)
@@ -170,6 +171,9 @@ SELECT distinct ?go_bp ?go_bpLabel ?determination ?determinationLabel WHERE {
   ?go_bp_statement pq:P459 ?determination . # get 'determination method' qualifiers associated with the statements
   # change to wd:Q23175558 for ISS (Inferred from Sequence or structural Similarity)
   # or e.g. wd:Q23190881 for IEA (Inferred from Electronic Annotation)
+  #add reference links 
+  ?go_bp_statement prov:wasDerivedFrom/pr:P248 ?reference_stated_in . #where stated
+  ?go_bp_statement prov:wasDerivedFrom/pr:P813 ?reference_retrieved . #when retrieved
   #add labels to everything (and retrieve by appending Label to the item you want in the response)
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
