@@ -463,27 +463,27 @@ SELECT DISTINCT ?geneLabel ?wdncbi ?geneLocStart ?geneLocStop ?disease_text ?goL
 
 WHERE
 {    
-    SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql>
-    {
-        ?gene wdt:P279 wd:Q7187 ;
-        # rdfs:label ?geneLabel ;
-         #wdt:P644 ?geneLocStart ;
-         #wdt:P645 ?geneLocStop ;
-         
-         wdt:P688 ?wd_protein .
+    SERVICE <https://query.wikidata.org/sparql>
+{    
+
+         ?gene wdt:P351 ?wdncbi ;
+         	   wdt:P703 wd:Q5;
+         	   #rdfs:label ?geneLabel ;
+         	   #wdt:P644 ?geneLocStart ;
+         	   #wdt:P645 ?geneLocStop ;
+               wdt:P688 ?wd_protein .
         ?wd_protein wdt:P352 ?uniprot_id ;
-            wdt:P681 ?go_term .
+                    wdt:P681 ?go_term .
         ?go_term wdt:P686 "GO:0016020" .
-          #  rdfs:label ?goLabel .   
-    }
+                 #rdfs:label ?goLabel .   
+}
     BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?uniprot_id)) as ?protein)
-		      ?protein up:annotation ?annotation .
-		      ?annotation a up:Disease_Annotation .
+              ?protein up:annotation ?annotation .
+              ?annotation a up:Disease_Annotation .
         ?annotation up:disease ?disease_annotation .
         ?disease_annotation <http://www.w3.org/2004/02/skos/core#prefLabel> ?disease_text .
     FILTER(REGEX(?disease_text, "Colorectal cancer", "i"))
-    FILTER(LANG(?geneLabel) = "en")
-    FILTER(LANG(?goLabel) = "en")  
+ 
 }
 ~~~
 
