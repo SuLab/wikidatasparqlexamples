@@ -465,16 +465,17 @@ WHERE
 {    
     SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql>
     {
-        ?gene wdt:P279 wd:Q7187 ;
-         rdfs:label ?geneLabel ;
-         wdt:P644 ?geneLocStart ;
-         wdt:P645 ?geneLocStop ;
-         wdt:P351 ?wdncbi ;
+        ?gene wdt:P351 ?wdncbi ;
+              wdt:P703 wd:Q5;
+         #rdfs:label ?geneLabel ;
+         #wdt:P644 ?geneLocStart ;
+         #wdt:P645 ?geneLocStop ;
+         
          wdt:P688 ?wd_protein .
         ?wd_protein wdt:P352 ?uniprot_id ;
-            ?function_type ?go_term .
-        ?go_term wdt:P686 "0016020" ;
-            rdfs:label ?goLabel .   
+            wdt:P681 ?go_term .
+        ?go_term wdt:P686 "GO:0016020" .
+            #rdfs:label ?goLabel .   
     }
     BIND(IRI(CONCAT("http://purl.uniprot.org/uniprot/", ?uniprot_id)) as ?protein)
 		      ?protein up:annotation ?annotation .
