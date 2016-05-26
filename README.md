@@ -679,6 +679,24 @@ SELECT ?organism_name WHERE {
 ~~~
 [Execute](http://tinyurl.com/no7sxv8)
 
+##Return gene counts for each bacterial genome in wikidata
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?species ?label (count (distinct ?gene) as ?gene_counts)  WHERE {
+   ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
+   ?gene wdt:P703 ?species . # P703 Found in taxon
+  ?species wdt:P171* wd:Q10876 .
+  ?species rdfs:label ?label filter (lang(?label) = "en") .
+
+ }
+ GROUP BY ?species ?label
+~~~
+[EXECUTE](http://tinyurl.com/z657law)
+
+
 # Queries for problems #
 ## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)##
 ~~~sparql
@@ -777,3 +795,4 @@ SELECT * WHERE {
 }
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
+
