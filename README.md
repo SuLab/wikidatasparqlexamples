@@ -812,3 +812,18 @@ SELECT * WHERE {
 }
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
+
+## Query for all genes (locustag and entrezid) in Wikidata, the organism item and the taxid of organism.
+~~~sparql
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?species ?taxid ?gene ?locustag ?entrezID WHERE {
+   ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
+   ?gene wdt:P703 ?species . # P703 Found in taxon
+   OPTIONAL{?gene wdt:P2393 ?locustag}
+   ?species wdt:P685 ?taxid.
+ }
+~~~
+[Execute](http://tinyurl.com/hhopbt8)
