@@ -711,7 +711,6 @@ SELECT ?species ?label (count (distinct ?protein) as ?protein_counts)  WHERE {
  }
  GROUP BY ?species ?label
 ~~~
-[EXECUTE](http://tinyurl.com/z2jh9w2)
 
 
 # Queries for problems #
