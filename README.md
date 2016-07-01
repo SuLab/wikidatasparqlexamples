@@ -703,8 +703,8 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?species ?label (count (distinct ?protein) as ?protein_counts)  WHERE {
-   ?gene wdt:P352 ?uniprotID . # P352 UniProt ID
-   ?gene wdt:P703 ?species . # P703 Found in taxon
+   ?protein wdt:P352 ?uniprotID . # P352 UniProt ID
+   ?protein wdt:P703 ?species . # P703 Found in taxon
   ?species wdt:P171* wd:Q10876 .
   ?species rdfs:label ?label filter (lang(?label) = "en") .
 
