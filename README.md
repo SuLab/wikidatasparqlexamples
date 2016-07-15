@@ -713,7 +713,7 @@ SELECT ?species ?label (count (distinct ?protein) as ?protein_counts)  WHERE {
 ~~~
 
 
-# Queries for problems #
+# Quality control queries #
 ## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)##
 ~~~sparql
 PREFIX schema: <http://schema.org/>
@@ -743,6 +743,17 @@ GROUP BY ?entrez_id
 ORDER BY DESC(?C) 
 limit 100
 ~~~
+
+## Retrieve all proteins which also carry an encodes property (P688)
+[Execute](http://tinyurl.com/zsucedw)
+
+```sparql
+SELECT * WHERE {
+	?p wdt:P352 ?up .
+  	?p wdt:P688 ?d .
+}
+```
+
 
 # Jenkins queries
 Identify the time Wikidata's sparql endpoint was updated last
