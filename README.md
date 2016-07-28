@@ -268,6 +268,23 @@ SELECT * WHERE {
 ~~~
 [Execute](http://tinyurl.com/qyvtsc6)
 
+###Get all go terms and their domains for a protein given a UniProt id###
+~~~sparql
+SELECT distinct ?pot_go ?goterm_label ?goclass ?goclass_label WHERE {
+    ?protein wdt:P352 "B0B9N6".  
+    {?protein wdt:P680 ?pot_go} 
+      UNION {?protein wdt:P681 ?pot_go} 
+      UNION {?protein wdt:P682 ?pot_go} .
+	?pot_go wdt:P279* ?goclass.
+    ?pot_go rdfs:label ?goterm_label.
+    FILTER (LANG(?goterm_label) = "en")
+    FILTER ( ?goclass = wd:Q2996394 || ?goclass = wd:Q5058355 || ?goclass = wd:Q14860489)
+    ?goclass rdfs:label ?goclass_label.
+    FILTER (LANG(?goclass_label) = "en")
+    }
+~~~
+[Execute](http://tinyurl.com/gv6o6p7)
+
 ###Counts of subcellular localization annotations associated with human genes###
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
