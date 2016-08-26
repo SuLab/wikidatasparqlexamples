@@ -272,18 +272,18 @@ SELECT * WHERE {
 ~~~sparql
 SELECT ?protein ?proteinLabel ?goterm  ?reference_stated_inLabel ?reference_retrievedLabel ?determination ?determinationLabel ?gotermValue ?gotermValueLabel ?goclass ?goclassLabel
 WHERE {
-  ?protein wdt:P352 "P0A0X4".
-  {?protein p:P680 ?goterm}
-  UNION {?protein p:P681 ?goterm}
-  UNION {?protein p:P682 ?goterm}.
-  ?goterm pq:P459 ?determination .
+  ?protein wdt:P352 "P0A0X4". #for protein with this uniprot
+  {?protein p:P680 ?goterm} # get molecular function statement
+  UNION {?protein p:P681 ?goterm} # get Cellular component statement
+  UNION {?protein p:P682 ?goterm}. # get Bio proc statement
+  ?goterm pq:P459 ?determination . #get evidence code
   ?goterm prov:wasDerivedFrom/pr:P248 ?reference_stated_in . #where stated
-  ?goterm prov:wasDerivedFrom/pr:P813 ?reference_retrieved .
-  {?goterm ps:P680 ?gotermValue}
-  UNION {?goterm ps:P681 ?gotermValue}
-  UNION {?goterm ps:P682 ?gotermValue}.
-  ?gotermValue wdt:P279* ?goclass.
-  FILTER ( ?goclass = wd:Q2996394 || ?goclass = wd:Q5058355 || ?goclass = wd:Q14860489) 
+  ?goterm prov:wasDerivedFrom/pr:P813 ?reference_retrieved . #when retrieved
+  {?goterm ps:P680 ?gotermValue} # mol func Label
+  UNION {?goterm ps:P681 ?gotermValue} # cell comp label
+  UNION {?goterm ps:P682 ?gotermValue}. # bio proc label
+  ?gotermValue wdt:P279* ?goclass. # ascend the hierarchy
+  FILTER ( ?goclass = wd:Q2996394 || ?goclass = wd:Q5058355 || ?goclass = wd:Q14860489) # filter for class
  
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .
