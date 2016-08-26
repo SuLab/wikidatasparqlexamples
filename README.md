@@ -268,22 +268,29 @@ SELECT * WHERE {
 ~~~
 [Execute](http://tinyurl.com/qyvtsc6)
 
-###Get all go terms and their domains for a protein given a UniProt id###
+###Get all go terms, their domains, evidence codes and references for a protein given a UniProt id###
 ~~~sparql
-SELECT distinct ?pot_go ?goterm_label ?goclass ?goclass_label WHERE {
-    ?protein wdt:P352 "B0B9N6".  
-    {?protein wdt:P680 ?pot_go} 
-      UNION {?protein wdt:P681 ?pot_go} 
-      UNION {?protein wdt:P682 ?pot_go} .
-	?pot_go wdt:P279* ?goclass.
-    ?pot_go rdfs:label ?goterm_label.
-    FILTER (LANG(?goterm_label) = "en")
-    FILTER ( ?goclass = wd:Q2996394 || ?goclass = wd:Q5058355 || ?goclass = wd:Q14860489)
-    ?goclass rdfs:label ?goclass_label.
-    FILTER (LANG(?goclass_label) = "en")
-    }
+SELECT ?protein ?proteinLabel ?goterm  ?reference_stated_inLabel ?reference_retrievedLabel ?determination ?determinationLabel ?gotermValue ?gotermValueLabel ?goclass ?goclassLabel
+WHERE {
+  ?protein wdt:P352 "P0A0X4".
+  {?protein p:P680 ?goterm}
+  UNION {?protein p:P681 ?goterm}
+  UNION {?protein p:P682 ?goterm}.
+  ?goterm pq:P459 ?determination .
+  ?goterm prov:wasDerivedFrom/pr:P248 ?reference_stated_in . #where stated
+  ?goterm prov:wasDerivedFrom/pr:P813 ?reference_retrieved .
+  {?goterm ps:P680 ?gotermValue}
+  UNION {?goterm ps:P681 ?gotermValue}
+  UNION {?goterm ps:P682 ?gotermValue}.
+  ?gotermValue wdt:P279* ?goclass.
+  FILTER ( ?goclass = wd:Q2996394 || ?goclass = wd:Q5058355 || ?goclass = wd:Q14860489) 
+ 
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .
+                 }
+}
 ~~~
-[Execute](http://tinyurl.com/gv6o6p7)
+[Execute](http://tinyurl.com/hygj3e5)
 
 ###Counts of subcellular localization annotations associated with human genes###
 ~~~sparql
