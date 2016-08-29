@@ -861,3 +861,21 @@ SELECT ?species ?taxid ?gene ?locustag ?entrezID WHERE {
  }
 ~~~
 [Execute](http://tinyurl.com/hhopbt8)
+
+## Query interpro domains and reference given a uniprot id
+~~~sparql
+SELECT distinct ?protein ?interPro_item ?interPro_label ?ipID ?reference_stated_in ?pubDate ?version ?refURL WHERE {
+  ?protein wdt:P352  "O84378";
+           p:P527 ?interPro.
+  ?interPro ps:P527 ?interPro_item;
+            prov:wasDerivedFrom/pr:P248 ?reference_stated_in ; #where stated
+			prov:wasDerivedFrom/pr:P577 ?pubDate ; #when retrieved
+			prov:wasDerivedFrom/pr:P348 ?version ; #when retrieved
+			prov:wasDerivedFrom/pr:P854 ?refURL . #when retrieved
+  
+  ?interPro_item wdt:P2926 ?ipID;
+                 rdfs:label ?interPro_label. 
+            filter (lang(?interPro_label) = "en") .
+}
+~~~
+[Execute](http://tinyurl.com/hyxds2e)
