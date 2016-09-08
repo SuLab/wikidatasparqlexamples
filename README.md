@@ -25,13 +25,45 @@ others: see http://prefix.cc
 
 ## Examples ##
 ### Drug Repurposing ###
+Drug interacts with protein encoded by gene with association to disease.  Showing Metformin
 ~~~sparql
-
 SELECT ?gene ?geneLabel ?disease ?diseaseLabel WHERE {
   wd:Q19484 wdt:P129 ?gene_product .   # drug interacts with a gene_product 
   ?gene_product wdt:P702 ?gene .  # gene_product is encoded by a gene
   ?gene	wdt:P2293 ?disease .    # gene is genetically associated with a disease 
   # add labels
+  	SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+	}
+}
+limit 1000
+~~~
+
+Find drugs for cancers that target genes related to cell proliferation
+cases where a drug physically interacts with the product of gene known to be genetically associated a disease
+these cases may show opportunities to repurpose a drug for a new disease
+See http://database.oxfordjournals.org/content/2016/baw083.long  and
+http://drug-repurposing.nationwidechildrens.org/search
+an example that was recently validated involved a new link between Metformin wd:Q19484 and cancer survival 
+https://jamia.oxfordjournals.org/content/22/1/179
+currently set up to find drugs for cancers that target genes related to cell proliferation
+adapt by changing constraints (e.g. to 'heart disease' Q190805) or removing them 
+
+~~~sparql
+SELECT ?drugLabel ?geneLabel ?biological_processLabel ?diseaseLabel WHERE {
+  ?drug wdt:P129 ?gene_product .   # drug interacts with a gene_product 
+  ?gene wdt:P688 ?gene_product .  # gene_product (usually a protein) is a product of a gene (a region of DNA)
+  ?disease	wdt:P2293 ?gene .    # genetic association between disease and gene 
+  ?disease wdt:P279* wd:Q12078 .  # limit to cancers wd:Q12078 (the * operator runs up a transitive relation..)
+  ?gene_product wdt:P682 ?biological_process . #add information about the GO biological processes that the gene is related to  
+  #limit to genes related to certain biological processes (and their sub-processes):
+  		#apoptosis wd:Q14599311 
+  		#cell proliferation wd:Q14818032
+  {?biological_process wdt:P279* wd:Q14818032 } # chain down subclass
+   UNION 
+  {?biological_process wdt:P361* wd:Q14818032 } # chain down part of
+    #uncomment the next line to find a subset of the known true positives (there are not a lot of them in here yet)
+  #?disease wdt:P2176 ?drug . 	# disease is treated by a drug 
   	SERVICE wikibase:label {
         bd:serviceParam wikibase:language "en" .
 	}
