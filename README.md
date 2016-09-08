@@ -24,6 +24,20 @@ PREFIX reference: <http://www.wikidata.org/prop/reference/>
 others: see http://prefix.cc
 
 ## Examples ##
+### Drug Repurposing ###
+~~~sparql
+
+SELECT ?gene ?geneLabel ?disease ?diseaseLabel WHERE {
+  wd:Q19484 wdt:P129 ?gene_product .   # drug interacts with a gene_product 
+  ?gene_product wdt:P702 ?gene .  # gene_product is encoded by a gene
+  ?gene	wdt:P2293 ?disease .    # gene is genetically associated with a disease 
+  # add labels
+  	SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+	}
+}
+limit 1000
+~~~
 
 ### Get mapping of Wikipedia to WikiData to Entrez Gene ###
 ~~~sparql
