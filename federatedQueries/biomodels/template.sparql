@@ -1,0 +1,15 @@
+#QUERY <http://identifiers.org/services/sparql>
+# Author: Andra Waagmeester
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+SELECT DISTINCT * WHERE {
+ SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+   # Wikidata triple patterns here
+ }
+ # Wikipathways triple patterns here
+}

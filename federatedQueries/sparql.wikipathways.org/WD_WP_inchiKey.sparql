@@ -1,0 +1,19 @@
+#QUERY <http://sparql.wikipathways.org>
+# Source: https://gist.github.com/egonw/4f8de6f74c7a1313cbbc522b850b37e4
+# Author: Egon Willighagen
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+SELECT DISTINCT str(?inchikeyLit) as ?inchikey str(?pathwayIDLit) as ?pathwayID WHERE {
+ SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+   ?wd_compound wdt:P235 ?inchikeyLit .
+ }
+ ?wp_compound wp:bdbWikidata ?wd_compound .
+ ?wp_compound dcterms:isPartOf ?pathway .
+ ?pathway a wp:Pathway ;
+    dcterms:identifier ?pathwayIDLit .
+}

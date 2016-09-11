@@ -1,0 +1,24 @@
+#QUERY <http://sparql.wikipathways.org>
+# Author: Andra Waagmeester
+
+PREFIX wp:      <http://vocabularies.wikipathways.org/wp#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+
+SELECT DISTINCT * WHERE {
+ SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+   ?wdGeneEntry wdt:P2888 ?geneProduct .
+ }
+ 
+     ?geneProduct a wp:GeneProduct . 
+     ?geneProduct rdfs:label ?label .
+     ?geneProduct dcterms:isPartOf ?pathway .
+     ?pathway a wp:Pathway .
+     ?pathway dcterms:identifier "WP716"^^xsd:string . 
+
+}
