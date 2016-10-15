@@ -594,6 +594,22 @@ WHERE
 }
 ~~~
 
+## Get all tyrosine kinase inhibitors used to treat hematological cancers
+[Execute](http://tinyurl.com/jdepzld)
+~~~sparql
+#cases where a tyrosine kinase inhibitor treats a hematological cancer
+SELECT ?drugLabel ?diseaseLabel
+WHERE {
+  ?drug     wdt:P2175 ?disease .   # drug treats a disease 
+  ?drug     wdt:P279* wd:Q906415 . # drug is subclass of wd:Q906415 (tyrosine kinase inhibitor)
+  ?disease  wdt:P279*  wd:Q18975047 .  # disease is subclass of wd:Q18975047 (the * operator runs up a transitive relation..)
+  	SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+	}
+}
+
+~~~
+
 # Curation queries for Wikidata
 
 ## Get all human proteins added by PBB
