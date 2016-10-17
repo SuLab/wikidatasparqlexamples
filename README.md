@@ -610,7 +610,6 @@ WHERE
 ~~~
 
 ## Get all tyrosine kinase inhibitors used to treat hematological cancers
-#### TODO: can someone add the reference for "drug treats disease" claim when available?
 [Execute](http://tinyurl.com/jdepzld)
 ~~~sparql
 #cases where a tyrosine kinase inhibitor treats a hematological cancer
@@ -623,6 +622,31 @@ WHERE {
         bd:serviceParam wikibase:language "en" .
 	}
 }
+
+## Get all tyrosine kinase inhibitors used to treat hematological cancers (include references in the result set)
+[Execute](http://tinyurl.com/jz99r72)
+```sparql
+PREFIX prov: <http://www.w3.org/ns/prov#>
+#cases where a tyrosine kinase inhibitor treats a hematological cancer
+SELECT ?drugLabel ?diseaseLabel ?drug ?ref_id ?ref_db ?ref_date
+WHERE {
+  ?drug     wdt:P2175 ?disease .   # drug treats a disease 
+  ?drug     wdt:P279* wd:Q906415 . # drug is subclass of wd:Q906415 (tyrosine kinase inhibitor)
+  ?disease  wdt:P279*  wd:Q18975047 .  # disease is subclass of wd:Q18975047 (the * operator runs up a transitive relation..)
+    SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+    }
+  
+   OPTIONAL {
+     ?drug p:P2175 ?s2 .
+     ?s2 prov:wasDerivedFrom ?v .
+     ?v <http://www.wikidata.org/prop/reference/P592>|<http://www.wikidata.org/prop/reference/P2115> ?ref_id .
+     ?v <http://www.wikidata.org/prop/reference/P248> ?ref_db .
+     ?v <http://www.wikidata.org/prop/reference/P813> ?ref_date .
+  }
+}
+group by ?drug ?drugLabel ?diseaseLabel ?ref_id ?ref_db ?ref_date
+```
 
 ~~~
 
