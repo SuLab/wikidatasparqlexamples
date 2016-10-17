@@ -595,6 +595,7 @@ WHERE
 ~~~
 
 ## Get all tyrosine kinase inhibitors used to treat hematological cancers
+#### TODO: can someone add the reference for "drug treats disease" claim when available?
 [Execute](http://tinyurl.com/jdepzld)
 ~~~sparql
 #cases where a tyrosine kinase inhibitor treats a hematological cancer
