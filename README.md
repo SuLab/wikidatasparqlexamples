@@ -516,6 +516,8 @@ group by ?upAlias ?uniprot ?encodedBy ?plabel ?ecName ?upversion
 ### Retrieve all human membrane proteins annotated for a role in colorectal cancer ###
 The query specifically selects for GRCh38 genomic coordinates.
 
+(Can we convert the query below to use disease ontology instead of the regex?)
+
 ~~~sparql
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
