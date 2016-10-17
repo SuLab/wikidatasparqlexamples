@@ -628,7 +628,7 @@ WHERE {
 ```sparql
 PREFIX prov: <http://www.w3.org/ns/prov#>
 #cases where a tyrosine kinase inhibitor treats a hematological cancer
-SELECT ?drugLabel ?diseaseLabel ?drug ?ref_id ?ref_db ?ref_date
+SELECT ?drugLabel ?diseaseLabel ?drug ?ref_id ?ref_db ?ref_dbLabel ?ref_date
 WHERE {
   ?drug     wdt:P2175 ?disease .   # drug treats a disease 
   ?drug     wdt:P279* wd:Q906415 . # drug is subclass of wd:Q906415 (tyrosine kinase inhibitor)
@@ -645,7 +645,7 @@ WHERE {
      ?v <http://www.wikidata.org/prop/reference/P813> ?ref_date .
   }
 }
-group by ?drug ?drugLabel ?diseaseLabel ?ref_id ?ref_db ?ref_date
+group by ?drug ?drugLabel ?diseaseLabel ?ref_id ?ref_db ?ref_dbLabel ?ref_date
 ```
 
 ~~~
