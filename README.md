@@ -78,7 +78,7 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 SELECT ?entrez_id ?cid ?article ?label WHERE {
     ?cid wdt:P351 ?entrez_id .
-  	?cid wdt:P703 wd:Q5 . 
+  	?cid wdt:P703 wd:Q15978631 . 
     OPTIONAL {
         ?cid rdfs:label ?label filter (lang(?label) = "en") .
     }
@@ -346,7 +346,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?gene (count (distinct ?go_term) as ?noGo)  WHERE {
    ?gene wdt:P351 ?entrezID . # P351 Entrez Gene ID
-   ?gene wdt:P703 wd:Q5 . # P703 Found in taxon human 
+   ?gene wdt:P703 wd:Q15978631 . # P703 Found in taxon human 
 	?gene wdt:P688 ?protein . # encodes a thing
   ?protein wdt:P279 wd:Q8054 . # that thing is a protein
   ?protein wdt:P681 ?go_term    # that protein has some annotation regarding subcellular localization
@@ -532,7 +532,7 @@ SELECT ?gene ?geneLabel ?wdncbi ?start ?stop ?disease_text WHERE
     {    
 
         ?gene wdt:P351 ?wdncbi ;
-              wdt:P703 wd:Q5;
+              wdt:P703 wd:Q15978631;
               rdfs:label ?geneLabel ;
               p:P644 ?geneLocStart ;
               p:P645 ?geneLocStop ;
@@ -624,7 +624,7 @@ WHERE {
     SELECT ?ncbigeneId WHERE {
     ?gene wdt:P279 wd:Q7187 .
     ?gene p:P351 ?ncbigeneId .
-    ?gene wdt:P703 wd:Q5 .
+    ?gene wdt:P703 wd:Q15978631 .
     ?gene ?p ?o .
     ?o prov:wasDerivedFrom ?derivedFrom .
     ?derivedFrom reference:P143 wd:Q20641742 .
@@ -643,7 +643,7 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
     SELECT DISTINCT ?ncbigeneId WHERE {
     ?gene wdt:P279 wd:Q7187 .
     ?gene p:P351 ?ncbigeneId .
-    ?gene wdt:P703 wd:Q5 .
+    ?gene wdt:P703 wd:Q15978631 .
     ?ncbigeneId prov:wasDerivedFrom ?derivedFrom .
     ?derivedFrom reference:P143 wd:Q20641742 .
 }
@@ -808,7 +808,7 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 SELECT ?entrez_id ?cid ?article ?label WHERE {
     ?cid wdt:P351 ?entrez_id .
-  	?cid wdt:P703 wd:Q5 . 
+  	?cid wdt:P703 wd:Q15978631 . 
     OPTIONAL {
         ?cid rdfs:label ?label filter (lang(?label) = "en") .
     	?article schema:about ?cid .
