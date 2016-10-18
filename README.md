@@ -622,8 +622,9 @@ WHERE {
         bd:serviceParam wikibase:language "en" .
 	}
 }
+~~~
 
-## Get all tyrosine kinase inhibitors used to treat hematological cancers (include references in the result set)
+### include references in the result set
 [Execute](http://tinyurl.com/jz99r72)
 ```sparql
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -647,8 +648,6 @@ WHERE {
 }
 group by ?drug ?drugLabel ?diseaseLabel ?ref_id ?ref_db ?ref_dbLabel ?ref_date
 ```
-
-~~~
 
 # Curation queries for Wikidata
 
