@@ -24,6 +24,34 @@ PREFIX reference: <http://www.wikidata.org/prop/reference/>
 others: see http://prefix.cc
 
 ## Examples ##
+### drugs and diseases ###
+Find drugs that treat a disease and show a link for each supporting reference
+~~~sparql
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+SELECT ?disease ?diseaseLabel ?diseaseDescription ?drug ?drugLabel ?drugDescription ?link
+WHERE {
+ ?disease wdt:P1748 'C3243' . #multiple sclerosis 
+ ?disease p:P2176 ?disease_drug .  #statement about drug used for treatment
+ ?disease_drug ps:P2176 ?drug . #which drug was it in that statement...  
+ ?disease_drug prov:wasDerivedFrom ?reference . #chemblid pr:P592 , #NDF-RT P2115      
+  
+  optional { 
+    ?reference pr:P592 ?chemblid . 
+    wd:P592 wdt:P1630 ?url .
+ 	BIND (replace(?url, "\\$1",?chemblid)  AS ?link)           
+  }
+ optional {
+    ?reference pr:P2115 ?NDF_RT_ID .  
+    wd:P2115 wdt:P1630 ?url .
+ 	BIND (replace(?url, "\\$1",?NDF_RT_ID )  AS ?link) 
+  }
+  SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+  }
+}
+~~~
+
+
 ### Drug Repurposing ###
 Drug interacts with protein encoded by gene with association to disease.  Showing Metformin
 ~~~sparql
