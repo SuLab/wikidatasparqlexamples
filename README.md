@@ -1007,3 +1007,12 @@ SELECT ?species ?taxid ?gene ?locustag ?entrezID WHERE {
  }
 ~~~
 [Execute](http://tinyurl.com/hhopbt8)
+
+
+~~~sparql
+SELECT ?species ?speciesLabel ?taxid ?RefSeq
+        WHERE { ?species wdt:P171* wd:Q10876;
+        wdt:P685 ?taxid; wdt:P2249 ?RefSeq.
+        SERVICE wikibase:label {
+        bd:serviceParam wikibase:language \"en\" .}}
+~~~
