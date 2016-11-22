@@ -767,7 +767,24 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 }
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0A%20%20%20%20PREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%0A%20%20%20%20PREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0A%20%20%20%20SELECT%20DISTINCT%20%3Fgene%20%3Ftaxa%20WHERE%20%7B%0A%20%20%20%20%7B%3Fgene%20wdt%3AP31%20wd%3AQ7187%20%7D%0A%20%20%20%20UNION%20%20%0A%20%20%20%20%7B%3Fgene%20wdt%3AP279%20wd%3AQ7187%20%7D%20.%0A%20%20%20%20%3Fgene%20wdt%3AP703%20%3Ftaxa%20.%0A%20%20%20%20%3Ftaxa%20wdt%3AP171*%20wd%3AQ10876%20%20%0A%7D)
-
+## Request all operons and their genes for a genome by taxid
+~~~sparql
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+SELECT ?strain ?strainLabel ?operon ?operonLabel ?gene ?geneLabel ?strand ?locustag WHERE {
+  ?strain wdt:P685 "169963". # get genome by taxid
+  ?operon wdt:P703 ?strain; # get operon that is found in that genome
+          wdt:P2548 ?strand; # get strand orientation
+          wdt:P279 wd:Q139677; #subclass of operon
+          wdt:P527 ?gene. # has part gene (gets all genes in operon)
+  ?gene wdt:P2393 ?locustag; # get ncbi locus tag for genes in operon
+        wdt:P351 ?entrez.  # get ncbi entrez id for genes in operon
+      SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en" .
+    }
+}
+~~~
+[Execute](http://tinyurl.com/hfu9wnt)
 ## Request all operons, their regulators, and their products
 ~~~sparql
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -1007,5 +1024,3 @@ SELECT ?species ?taxid ?gene ?locustag ?entrezID WHERE {
  }
 ~~~
 [Execute](http://tinyurl.com/hhopbt8)
-
-
