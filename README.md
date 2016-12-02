@@ -413,6 +413,20 @@ SELECT * WHERE {
 }
 ~~~
 
+### Count of number of GO annotations on yeast grouped by curator
+~~~sparql
+SELECT ?curatorLabel (COUNT(?ref) AS ?count)
+WHERE
+{
+	?item wdt:P703 wd:Q27510868 .
+    ?item p:P682|p:P681|p:P680 ?s .
+    ?s prov:wasDerivedFrom ?ref .
+    ?ref pr:P1640 ?curator
+	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+} group by ?curatorLabel order by ?count
+~~~
+[Execute](http://tinyurl.com/jq8w774)
+
 ### Proteins added by ProteinBoxBot ###
 ~~~sparql
 PREFIX wikibase: <http://wikiba.se/ontology#>
