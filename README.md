@@ -1038,3 +1038,33 @@ SELECT ?species ?taxid ?gene ?locustag ?entrezID WHERE {
  }
 ~~~
 [Execute](http://tinyurl.com/hhopbt8)
+
+## Get all proteins with GO annotations that are a subclass of "signaling receptor activity", where the determination method is a type of manual assertion, and the evidence is a scientific article that was published in the last three years
+~~~sparql
+SELECT distinct ?uniprot ?determinationLabel ?curatorLabel ?reference_stated_inLabel ?pmid ?publication_date ?go_id ?sig_rec_goLabel WHERE  {
+  
+  ?sig_rec_go wdt:P686 ?go_id . # get GO IDs
+  ?sig_rec_go wdt:P279* wd:Q21109843 . # that are subclasses of "signaling receptor activity"
+  
+  ?protein wdt:P703 wd:Q15978631 . # get items that are "found in taxon" human
+  ?protein wdt:P352 ?uniprot . # and have a uniprot ID
+  
+  ?protein wdt:P680 ?sig_rec_go . # proteins where the MF a signaling receptor activity subclass
+  ?protein p:P680 ?statement . # get statements
+  
+  ?statement pq:P459 ?determination . # get 'determination method' qualifiers associated with the statements
+  ?determination wdt:P31 wd:Q28955254 . # filter where the determination method is a "manual assertion"
+  
+  ?statement prov:wasDerivedFrom/pr:P248 ?reference_stated_in . # get the "stated in" reference
+  ?reference_stated_in wdt:P31 wd:Q13442814 . # stated in a "scientific article"
+  ?reference_stated_in wdt:P577 ?publication_date . # get the publication date
+  ?reference_stated_in wdt:P698 ?pmid . # get the pubmed id
+  FILTER (?publication_date >= "2014-01-01T00:00:00Z"^^xsd:dateTime) . # filter where publication date is after 2014
+  
+  ?statement prov:wasDerivedFrom/pr:P1640 ?curator . # get the curator
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" . }
+  
+} limit 50
+~~~
+[Execute](http://tinyurl.com/mpqjrvp)
