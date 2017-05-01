@@ -938,6 +938,21 @@ SELECT * WHERE {
 }
 ```
 
+## Retrieve reverse statements (statements where the item is the object)
+[Execute](http://tinyurl.com/lkmlzz7)
+```sparql
+SELECT ?item ?itemLabel ?property ?propertyLabel ?value ?valueLabel ?id
+WHERE {
+  values ?value {wd:Q7758678 wd:Q133696}
+  ?item ?propertyclaim ?id .
+  ?property wikibase:propertyType wikibase:WikibaseItem .
+  ?property wikibase:claim ?propertyclaim .
+  ?id ?b ?value .
+  FILTER(regex(str(?b), "http://www.wikidata.org/prop/statement" ))
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+}
+```
+
 
 # Jenkins queries
 Identify the time Wikidata's sparql endpoint was updated last
