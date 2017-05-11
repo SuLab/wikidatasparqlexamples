@@ -1027,6 +1027,7 @@ SELECT ?pot_go WHERE {
  }
  ORDER BY ?pot_go
 ~~~
+[Execute](http://tinyurl.com/l98j8jb)
 
 ## Query for all Wikidata items that are both annotated as being of subclass of gene and protein
 ~~~sparql
