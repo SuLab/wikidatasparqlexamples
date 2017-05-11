@@ -572,6 +572,8 @@ The query specifically selects for GRCh38 genomic coordinates.
 
 (Can we convert the query below to use disease ontology instead of the regex?)
 
+**NOTE**: This query must be executed at sparql.uniprot.org because wikidata does not allow uniprot endpoint as federated query target.
+
 ~~~sparql
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -613,6 +615,8 @@ SELECT ?gene ?geneLabel ?wdncbi ?start ?stop ?disease_text WHERE
     FILTER(REGEX(?disease_text, "Colorectal cancer", "i"))
 }
 ~~~
+
+[Execute](http://tinyurl.com/kmonkzw) (sparql.uniprot.org)
 
 ### Get GO annotations for protein O84188 ###
 
