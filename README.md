@@ -354,7 +354,7 @@ SELECT * WHERE {
 ~~~
 [Execute](http://tinyurl.com/qyvtsc6)
 
-### Get all go terms, their domains, evidence codes and references for a protein given a UniProt id###
+### Get all go terms, their domains, evidence codes and references for a protein given a UniProt id
 ~~~sparql
 SELECT ?protein ?proteinLabel ?goterm  ?reference_stated_inLabel ?reference_retrievedLabel ?determination ?determinationLabel ?gotermValue ?gotermValueLabel ?goclass ?goclassLabel
 WHERE {
@@ -378,7 +378,7 @@ WHERE {
 ~~~
 [Execute](http://tinyurl.com/hygj3e5)
 
-### Counts of subcellular localization annotations associated with human genes###
+### Counts of subcellular localization annotations associated with human genes
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -655,7 +655,7 @@ WHERE
 ~~~
 
 ## Get all tyrosine kinase inhibitors used to treat hematological cancers
-[Execute](http://tinyurl.com/jdepzld)
+(currently returns no records because wikidata does not have great representation of compound classes.)
 ~~~sparql
 #cases where a tyrosine kinase inhibitor treats a hematological cancer
 SELECT ?drugLabel ?diseaseLabel
@@ -668,6 +668,7 @@ WHERE {
 	}
 }
 ~~~
+[Execute](http://tinyurl.com/jdepzld)
 
 ### include references in the result set
 [Execute](http://tinyurl.com/jz99r72)
@@ -901,7 +902,7 @@ SELECT ?species ?label (count (distinct ?protein) as ?protein_counts)  WHERE {
 
 
 # Quality control queries #
-## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)##
+## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)
 ~~~sparql
 PREFIX schema: <http://schema.org/>
 PREFIX wd: <http://www.wikidata.org/entity/>
