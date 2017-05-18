@@ -1,4 +1,3 @@
-[TOC]
 
 # Query wikidata with SPARQL #
 
@@ -355,7 +354,7 @@ SELECT * WHERE {
 ~~~
 [Execute](http://tinyurl.com/qyvtsc6)
 
-###Get all go terms, their domains, evidence codes and references for a protein given a UniProt id###
+### Get all go terms, their domains, evidence codes and references for a protein given a UniProt id
 ~~~sparql
 SELECT ?protein ?proteinLabel ?goterm  ?reference_stated_inLabel ?reference_retrievedLabel ?determination ?determinationLabel ?gotermValue ?gotermValueLabel ?goclass ?goclassLabel
 WHERE {
@@ -379,7 +378,7 @@ WHERE {
 ~~~
 [Execute](http://tinyurl.com/hygj3e5)
 
-###Counts of subcellular localization annotations associated with human genes###
+### Counts of subcellular localization annotations associated with human genes
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -573,6 +572,8 @@ The query specifically selects for GRCh38 genomic coordinates.
 
 (Can we convert the query below to use disease ontology instead of the regex?)
 
+**NOTE**: This query must be executed at sparql.uniprot.org because wikidata does not allow uniprot endpoint as federated query target.
+
 ~~~sparql
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -615,6 +616,8 @@ SELECT ?gene ?geneLabel ?wdncbi ?start ?stop ?disease_text WHERE
 }
 ~~~
 
+[Execute](http://tinyurl.com/kmonkzw) (sparql.uniprot.org)
+
 ### Get GO annotations for protein O84188 ###
 
 ~~~sparql
@@ -652,7 +655,7 @@ WHERE
 ~~~
 
 ## Get all tyrosine kinase inhibitors used to treat hematological cancers
-[Execute](http://tinyurl.com/jdepzld)
+(currently returns no records because wikidata does not have great representation of compound classes.)
 ~~~sparql
 #cases where a tyrosine kinase inhibitor treats a hematological cancer
 SELECT ?drugLabel ?diseaseLabel
@@ -665,6 +668,7 @@ WHERE {
 	}
 }
 ~~~
+[Execute](http://tinyurl.com/jdepzld)
 
 ### include references in the result set
 [Execute](http://tinyurl.com/jz99r72)
@@ -863,7 +867,7 @@ SELECT ?organism_name WHERE {
 ~~~
 [Execute](http://tinyurl.com/no7sxv8)
 
-##Return gene counts for each bacterial genome in wikidata
+## Return gene counts for each bacterial genome in wikidata
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -880,7 +884,7 @@ SELECT ?species ?label (count (distinct ?gene) as ?gene_counts)  WHERE {
 ~~~
 [EXECUTE](http://tinyurl.com/z657law)
 
-##Return protein counts for each bacterial genome in wikidata
+## Return protein counts for each bacterial genome in wikidata
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -898,7 +902,7 @@ SELECT ?species ?label (count (distinct ?protein) as ?protein_counts)  WHERE {
 
 
 # Quality control queries #
-## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)##
+## Get a list of human genes with wikidata items but no English wikipedia page associated with them.  (results would eventually contain wikipedia links, the linkless appear on the top of the list)
 ~~~sparql
 PREFIX schema: <http://schema.org/>
 PREFIX wd: <http://www.wikidata.org/entity/>
@@ -1027,6 +1031,7 @@ SELECT ?pot_go WHERE {
  }
  ORDER BY ?pot_go
 ~~~
+[Execute](http://tinyurl.com/l98j8jb)
 
 ## Query for all Wikidata items that are both annotated as being of subclass of gene and protein
 ~~~sparql
@@ -1039,6 +1044,7 @@ SELECT * WHERE {
 ~~~
 [Execute](https://query.wikidata.org/#PREFIX%20wikibase%3A%20%3Chttp%3A%2F%2Fwikiba.se%2Fontology%23%3E%0APREFIX%20wd%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F%3E%20%0APREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20p%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2F%3E%0APREFIX%20v%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fstatement%2F%3E%0ASELECT%20*%20WHERE%20%7B%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ7187%20.%0A%20%20%3Fgene%20wdt%3AP279%20wd%3AQ8054%20.%0A%20%7D)
 
+# Uncategorized queries
 ## Query for all genes (locustag and entrezid) in Wikidata, the organism item and the taxid of organism.
 ~~~sparql
 PREFIX wd: <http://www.wikidata.org/entity/> 
