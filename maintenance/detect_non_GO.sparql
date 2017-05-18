@@ -1,0 +1,11 @@
+# Find all items that are used as P680 (molecular function), P681 (cell component) or P682 (biological process),
+# but do not carry a GO ID (P686)
+## validator: NoResultsValidator
+SELECT ?go WHERE {
+  {
+    SELECT DISTINCT ?go WHERE {
+        ?protein wdt:P680|wdt:P681|wdt:P682 ?go
+    }
+  }
+  FILTER NOT EXISTS {?go wdt:P686 ?goid} .
+}

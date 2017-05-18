@@ -1,0 +1,8 @@
+# Detect genes encoding for proteins of a different taxon.
+
+SELECT ?gene ?protein ?gtaxon ?ptaxon WHERE {
+?gene wdt:Pencode ?protein .
+?gene wdt:Pfoundtaxon ?gtaxon .
+?protein wdt:Pfoundtaxon ?ptaxon .
+FILTER {?gtaxon != ?ptaxon}
+}

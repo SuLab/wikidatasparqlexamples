@@ -1,0 +1,6 @@
+# Query for all Wikidata items that are both annotated as being instance of gene and protein
+## validator: NoResultsValidator
+SELECT * WHERE {
+  ?gene wdt:P31 wd:Q7187 .
+  ?gene wdt:P31 wd:Q8054 .
+}
