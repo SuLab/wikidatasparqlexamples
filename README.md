@@ -857,13 +857,13 @@ FILTER (LANG(?prot_name) = "en") .
 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
-SELECT ?organism_name WHERE {   
-  ?organism_item wdt:P276 wd:Q5880 ;
+SELECT ?organism_name ?organism_item WHERE {   
+  ?organism_item wdt:P2974 wd:Q5880 ;
     rdfs:label ?organism_name . 
   ?gene wdt:P703 ?organism_item ; 
     wdt:P1056 wd:Q319541 . 
   FILTER (LANG(?organism_name) = "en") .    
-}  
+}   
 ~~~
 [Execute](http://tinyurl.com/no7sxv8)
 
