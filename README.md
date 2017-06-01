@@ -865,7 +865,7 @@ SELECT ?organism_name ?organism_item WHERE {
   FILTER (LANG(?organism_name) = "en") .    
 }   
 ~~~
-[Execute](http://tinyurl.com/no7sxv8)
+[Execute](http://tinyurl.com/y94nfz7j)
 
 ## Return gene counts for each bacterial genome in wikidata
 ~~~sparql
